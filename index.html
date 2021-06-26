@@ -47,7 +47,10 @@
       function login(){
         const pat = document.getElementById("pat").value;
 
-        api('/user', pat).then(function(response){
+        // api('/user', pat).then(function(response){
+        //   console.log(response);
+        // });
+        api('/repos/astariul/private-gh-pages/branches', pat).then(function(response){
           console.log(response);
         });
       };
