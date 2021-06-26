@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <!-- Skeleton CSS -->
+    <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" rel="stylesheet"/>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&amp;display=swap" rel="stylesheet" type="text/css"/>
+    <style>
+        body { font-family: "Montserrat"; }
+        .text-header {
+            margin-top: 12rem;
+            margin-bottom: 2rem;
+			text-transform: uppercase;
+			font-size: 1.4rem;
+			letter-spacing: .2rem;
+			font-weight: 600; }
+        .container {
+            max-width: 500px; }
+        .error {
+            color: #ff6464; }
+    </style>
+    <script>
+      const endpoint = 'https://api.github.com';
+
+      const api = (resource, pat) => {
+        const options = {
+          mode: 'cors',
+          headers: {
+            'Authorization': 'Basic ' + btoa(`${pat}`),
+          }
+        }
+
+        document.getElementById("err").hidden = true;
+        return fetch(`${endpoint}${resource}`, options)
+          .then(function(response){
+            if (response.ok) {
+              return response.json()
+            } else {
+              document.getElementById("err").hidden = false;
+            }
+          });
+      }
+
+      function login(){
+        const pat = document.getElementById("pat").value;
+
+        api('/user', pat).then(function(response){
+          console.log(response);
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h5 class="text-header">Login with a Github Personal access token</h5>
+      </header>
+      <input id="pat" type="password" placeholder="Personal access token" class="u-full-width" required>
+      <button onclick="login();" class="button-primary">Login</button>
+      <p id="err" class="error" hidden>Authentication failed</p>
+    </div>
+  </body>
+</html>
