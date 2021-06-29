@@ -50,31 +50,9 @@
         // api('/user', pat).then(function(response){
         //   console.log(response);
         // });
-        api('/repos/astariul/private-gh-pages/branches', pat).then(function(response){
-          // Extract branches names, excluding `main` and `master`
-          var branches = Array.from(response, ({ name }) => name);
-          branches = branches.filter(name => !(name == "main" || name == "master"));
-
-          // Create index of branches
-          var branchlist = document.getElementById("branchlist");
-          branches.forEach(function (brch) {
-            let li = document.createElement('li');
-            branchlist.appendChild(li);
-
-            li.innerHTML += `<button onclick="get_page('${brch}');">${brch}</button>`;
-          });
-        });
-      };
-
-      function get_page(branch){
-        const pat = document.getElementById("pat").value;
-
-        api(`/repos/astariul/private-gh-pages/zipball/${branch}`, pat).then(function(response){
+        api(`/repos/astariul/private_content/zipball`, pat).then(function(response){
           console.log(response);
         });
-        // api(`/repos/astariul/private-gh-pages/zipball`, pat).then(function(response){
-        //   console.log(response);
-        // });
       };
     </script>
   </head>
@@ -86,8 +64,6 @@
       <input id="pat" type="password" placeholder="Personal access token" class="u-full-width" required>
       <button onclick="login();" class="button-primary">Login</button>
       <p id="err" class="error" hidden>Authentication failed</p>
-      <ul id="branchlist" style="list-style-type:none;">
-      </ul>
     </div>
   </body>
 </html>
